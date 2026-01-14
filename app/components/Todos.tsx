@@ -3,9 +3,7 @@
 import { useTodos } from "../hooks/useTodos";
 import { Todo } from "@/app/types/Todo";
 
-export default function Todos({ data }: { data: Todo[] }) {
-  const { todos } = useTodos(data);
-
+export default function Todos({ data: todos }: { data: Todo[] }) {
   return (
     <ul>
       {todos.map((todo) => (

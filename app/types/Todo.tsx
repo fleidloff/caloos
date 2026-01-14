@@ -1,6 +1,6 @@
 export type Todo = {
-  id: number;
+  id?: number;
   title: string;
   due_date: string | null;
-  created_at: string;
+  created_at?: string;
 };
