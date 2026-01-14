@@ -13,10 +13,10 @@ export function useTodos(initialTodos: Todo[]) {
     setTodos(data);
   };
 
-  const deleteTodo = async () => {
+  const deleteTodo = async (id: number) => {
     const res = await fetch("/api/deleteTodo", {
       method: "POST",
-      body: JSON.stringify({ id: 16 }),
+      body: JSON.stringify({ id }),
     });
     const data = await res.json();
     setTodos(data);

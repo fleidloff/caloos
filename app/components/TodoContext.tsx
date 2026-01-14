@@ -6,12 +6,12 @@ import AddTodo from "./AddTodo";
 import Todos from "./Todos";
 
 export default function TodoContext({ data }: { data: Todo[] }) {
-  const { todos, addTodo } = useTodos(data);
+  const { todos, addTodo, deleteTodo } = useTodos(data);
 
   return (
     <>
-      <Todos data={todos} />
-      <AddTodo onClick={addTodo} />
+      <Todos data={todos} onDelete={deleteTodo} />
+      <AddTodo onAdd={addTodo} />
     </>
   );
 }

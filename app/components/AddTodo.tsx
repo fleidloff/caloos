@@ -3,9 +3,9 @@
 import { MouseEventHandler } from "react";
 
 type AddTodoProps = {
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  onAdd: () => void;
 };
 
-export default function AddTodo({ onClick }: AddTodoProps) {
-  return <button onClick={onClick}>add todo</button>;
+export default function AddTodo({ onAdd }: AddTodoProps) {
+  return <button onClick={onAdd}>add todo</button>;
 }
