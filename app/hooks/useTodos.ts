@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Todo } from "@/app/types/Todo";
 import { fetcher } from "@/app/lib/fetcher";
 
-export function useTodos(initialTodos: Todo[]) {
+export function useTodos() {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
