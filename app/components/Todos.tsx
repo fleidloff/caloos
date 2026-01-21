@@ -1,7 +1,7 @@
 "use client";
 
 import { MouseEventHandler } from "react";
-import { useTodos } from "../hooks/useTodos";
+import { useTodos } from "@/app/hooks/useTodos";
 import { Todo } from "@/app/types/Todo";
 
 type TodosProps = {

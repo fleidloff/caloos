@@ -5,8 +5,8 @@ import { Todo } from "@/app/types/Todo";
 import AddTodo from "./AddTodo";
 import Todos from "./Todos";
 
-export default function TodoContext({ data }: { data: Todo[] }) {
-  const { todos, addTodo, deleteTodo } = useTodos(data);
+export default function TodoContext() {
+  const { todos, addTodo, deleteTodo } = useTodos();
 
   return (
     <>
