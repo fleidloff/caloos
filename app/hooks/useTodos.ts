@@ -21,10 +21,10 @@ export function useTodos() {
     }
   };
 
-  const addTodo = async (title: string) => {
+  const addTodo = async (title: string, dueDate: string | null) => {
     const res = await fetcher("/api/addTodo", {
       method: "POST",
-      body: JSON.stringify({ title }),
+      body: JSON.stringify({ title, due_date: dueDate }),
     });
     const data = await res.json();
     setTodos(data);

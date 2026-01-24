@@ -21,7 +21,17 @@ export default function Todos({ data: todos, onDelete }: TodosProps) {
             px="1"
             className="group"
           >
-            <Text>{todo.title}</Text>
+            <Flex direction="column" gap="1">
+              <Text size="2" weight="medium">
+                {todo.title}
+              </Text>
+
+              {todo.due_date && (
+                <Text size="1" color="gray">
+                  {new Date(todo.due_date).toLocaleDateString()}
+                </Text>
+              )}
+            </Flex>
 
             <IconButton
               className="opacity-0 group-hover:opacity-100 transition"
