@@ -1,19 +1,29 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Todo } from "@/app/types/Todo";
 import { fetcher } from "@/app/lib/fetcher";
+import { useRouter } from "next/navigation";
+import { useSecret } from "@/app/hooks/useSecret";
 
 export function useTodos() {
+  const router = useRouter();
   const [todos, setTodos] = useState<Todo[]>([]);
-
-  useEffect(() => {
-    fetchTodos();
-  }, []);
+  const { secret } = useSecret();
 
   const fetchTodos = async () => {
     try {
-      const res = await fetcher("/api/todos", {
-        method: "GET",
-      });
+      const res = await fetcher(
+        "/api/todos",
+        {
+          method: "GET",
+        },
+        secret
+      );
+      if (res.status === 401) {
+        router.replace("/login");
+        return;
+      }
       const data = await res.json();
       setTodos(data);
     } catch (err) {
@@ -21,20 +31,39 @@ export function useTodos() {
     }
   };
 
-  const addTodo = async (title: string, dueDate: string | null) => {
-    const res = await fetcher("/api/addTodo", {
-      method: "POST",
-      body: JSON.stringify({ title, due_date: dueDate }),
-    });
+  const addTodo = async (
+    title: string,
+    dueDate: string | null
+  ): Promise<void> => {
+    const res = await fetcher(
+      "/api/addTodo",
+      {
+        method: "POST",
+        body: JSON.stringify({ title, due_date: dueDate }),
+      },
+      secret
+    );
+    if (res.status === 401) {
+      router.replace("/login");
+      return;
+    }
     const data = await res.json();
     setTodos(data);
   };
 
   const deleteTodo = async (id: number) => {
-    const res = await fetcher("/api/deleteTodo", {
-      method: "POST",
-      body: JSON.stringify({ id }),
-    });
+    const res = await fetcher(
+      "/api/deleteTodo",
+      {
+        method: "POST",
+        body: JSON.stringify({ id }),
+      },
+      secret
+    );
+    if (res.status === 401) {
+      router.replace("/login");
+      return;
+    }
     const data = await res.json();
     setTodos(data);
   };

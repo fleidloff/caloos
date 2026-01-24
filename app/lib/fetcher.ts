@@ -4,10 +4,11 @@ type FetcherOptions = RequestInit & {
 
 export async function fetcher(
   input: RequestInfo | URL,
-  options: FetcherOptions = {}
+  options: FetcherOptions = {},
+  secret: string
 ) {
   const defaultHeaders = {
-    "x-secret": "foobar",
+    "x-secret": secret,
   };
 
   return fetch(input, {
