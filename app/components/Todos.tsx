@@ -1,7 +1,7 @@
 "use client";
 
-import { MouseEventHandler } from "react";
-import { useTodos } from "@/app/hooks/useTodos";
+import { Flex, Text, IconButton, Separator } from "@radix-ui/themes";
+import { TrashIcon } from "@radix-ui/react-icons";
 import { Todo } from "@/app/types/Todo";
 
 type TodosProps = {
@@ -11,13 +11,31 @@ type TodosProps = {
 
 export default function Todos({ data: todos, onDelete }: TodosProps) {
   return (
-    <ul>
-      {todos.map((todo) => (
-        <li key={todo.id}>
-          {todo.title}{" "}
-          <button onClick={() => onDelete(todo.id!)}>delete</button>
-        </li>
+    <Flex direction="column" gap="1">
+      {todos.map((todo, index) => (
+        <Flex key={todo.id} direction="column">
+          <Flex
+            align="center"
+            justify="between"
+            py="2"
+            px="1"
+            className="group"
+          >
+            <Text>{todo.title}</Text>
+
+            <IconButton
+              className="opacity-0 group-hover:opacity-100 transition"
+              variant="ghost"
+              color="red"
+              onClick={() => onDelete(todo.id!)}
+            >
+              <TrashIcon />
+            </IconButton>
+          </Flex>
+
+          {index < todos.length - 1 && <Separator size="4" />}
+        </Flex>
       ))}
-    </ul>
+    </Flex>
   );
 }
