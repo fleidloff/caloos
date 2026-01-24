@@ -11,6 +11,7 @@
     "generate-database-types": "npx supabase gen types typescript --project-id olwuigxjpaepnnllqvlv > app/types/Database.ts"
   },
   "dependencies": {
+    "@radix-ui/themes": "^3.2.1",
     "@supabase/supabase-js": "^2.90.1",
     "next": "16.1.1",
     "react": "19.2.3",

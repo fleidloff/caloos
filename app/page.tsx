@@ -1,5 +1,3 @@
-import Image from "next/image";
-import { supabaseServer } from "@/app/lib/supabaseServer";
 import TodoApp from "@/app/components/TodoApp";
 
 export default async function Home() {
