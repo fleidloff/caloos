@@ -1,11 +1,9 @@
 "use client";
 
-import { MouseEventHandler } from "react";
-
 type AddTodoProps = {
-  onAdd: () => void;
+  onAdd: (title: string) => void;
 };
 
 export default function AddTodo({ onAdd }: AddTodoProps) {
-  return <button onClick={onAdd}>add todo</button>;
+  return <button onClick={() => onAdd("title")}>add todo</button>;
 }

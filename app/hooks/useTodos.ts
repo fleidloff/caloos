@@ -6,25 +6,25 @@ export function useTodos() {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
-    const fetchTodos = async () => {
-      try {
-        const res = await fetcher("/api/todos", {
-          method: "GET",
-        });
-        const data = await res.json();
-        setTodos(data);
-      } catch (err) {
-        console.error("Failed to fetch todos", err);
-      }
-    };
-
     fetchTodos();
   }, []);
 
-  const addTodo = async () => {
+  const fetchTodos = async () => {
+    try {
+      const res = await fetcher("/api/todos", {
+        method: "GET",
+      });
+      const data = await res.json();
+      setTodos(data);
+    } catch (err) {
+      console.error("Failed to fetch todos", err);
+    }
+  };
+
+  const addTodo = async (title: string) => {
     const res = await fetcher("/api/addTodo", {
       method: "POST",
-      body: JSON.stringify({ title: "New todo" }),
+      body: JSON.stringify({ title }),
     });
     const data = await res.json();
     setTodos(data);
@@ -39,5 +39,5 @@ export function useTodos() {
     setTodos(data);
   };
 
-  return { todos, addTodo, deleteTodo };
+  return { todos, addTodo, deleteTodo, fetchTodos };
 }

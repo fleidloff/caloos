@@ -10,17 +10,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { data, error } = await supabaseServer
-    .from("todos")
-    .insert([{ title, user_id: user.id, due_date: null }]);
-
-  if (error)
-    return NextResponse.json({ error: error.message }, { status: 500 });
-
   const { data: todos, error: listError } = await supabaseServer
     .from("todos")
     .select("*")
     .eq("user_id", user.id);
 
-  return NextResponse.json(todos);
+  const { data, error } = await supabaseServer
+    .from("todos")
+    .insert([{ title, user_id: user.id, due_date: null }])
+    .select()
+    .single();
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json([...todos!, data]);
 }
