@@ -6,14 +6,45 @@ import { useSecret } from "@/app/hooks/useSecret";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
-  const { secret, setSecret } = useSecret();
-  const [input, setInput] = useState(secret);
+  const { setSecret } = useSecret();
   const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSecret(input);
-    router.replace("/");
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user, password }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Invalid credentials");
+      }
+
+      const data = await res.json();
+
+      if (!data.secret) {
+        throw new Error("No secret returned");
+      }
+
+      setSecret(data.secret);
+      router.replace("/");
+    } catch (err: any) {
+      setError(err.message ?? "Login failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -24,27 +55,39 @@ export default function Login() {
         </Text>
 
         <form onSubmit={handleSubmit}>
-          <Box className="mb-4">
+          <Box className="mb-3">
             <TextField.Root
               size="2"
-              placeholder="Enter secret…"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
+              placeholder="Username"
+              value={user}
+              onChange={(e) => setUser(e.target.value)}
+              required
             />
           </Box>
 
+          <Box className="mb-4">
+            <TextField.Root
+              size="2"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </Box>
+
+          {error && (
+            <Text size="2" color="red" className="mb-3 block">
+              {error}
+            </Text>
+          )}
+
           <Flex justify="end">
-            <Button type="submit" size="2" variant="solid">
-              Save Secret
+            <Button type="submit" size="2" disabled={loading}>
+              {loading ? "Logging in…" : "Login"}
             </Button>
           </Flex>
         </form>
-
-        {secret && (
-          <Text size="2" className="mt-4 block">
-            Current secret: {secret}
-          </Text>
-        )}
       </Box>
     </div>
   );
