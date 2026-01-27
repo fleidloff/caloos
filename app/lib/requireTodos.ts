@@ -6,7 +6,8 @@ export async function requireTodos(user: Tables<"user">) {
     .from("todos")
     .select("*")
     .eq("user_id", user.id)
-    .order("due_date", { ascending: true, nullsFirst: true });
+    .order("due_date", { ascending: true, nullsFirst: true })
+    .order("id", { ascending: false });
 
   return { todos, error };
 }

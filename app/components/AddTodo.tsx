@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { TextField, Text, Button, Box } from "@radix-ui/themes";
+import { TextField, Text, Button, Box, Card, Flex } from "@radix-ui/themes";
 
 type AddTodoProps = {
   onAdd: (title: string, dueDate: string | null) => Promise<void>;
@@ -23,26 +23,32 @@ export default function AddTodo({ onAdd }: AddTodoProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2">
-      <Box maxWidth="250px">
-        <TextField.Root
-          size="2"
-          placeholder="Add todo…"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </Box>
-      <Box>
-        <TextField.Root
-          size="2"
-          type="date"
-          value={dueDate ?? ""}
-          onChange={(e) => setDueDate(e.target.value || null)}
-        />
-      </Box>
-      <Button disabled={!title.trim()} variant="solid">
-        Add Todo
-      </Button>
+    <form onSubmit={handleSubmit}>
+      <Card size="2" className="mb-4">
+        <Flex gap="4" align="center" justify="between">
+          <Box maxWidth="250px">
+            <TextField.Root
+              size="3"
+              variant="surface"
+              placeholder="Add todo…"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </Box>
+          <Box>
+            <TextField.Root
+              size="3"
+              type="date"
+              variant="soft"
+              value={dueDate ?? ""}
+              onChange={(e) => setDueDate(e.target.value || null)}
+            />
+          </Box>
+          <Button disabled={!title.trim()} variant="solid" size="3">
+            Add Todo
+          </Button>
+        </Flex>
+      </Card>
     </form>
   );
 }

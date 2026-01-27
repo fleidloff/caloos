@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
   const index = newTodos.findIndex((todo) => {
     if (!newTodo.due_date) {
-      return !!todo.due_date;
+      return true;
     }
     return (
       todo.due_date && newTodo.due_date && newTodo.due_date < todo.due_date
