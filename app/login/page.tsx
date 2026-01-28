@@ -48,7 +48,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 dark:bg-black font-sans">
+    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
       <Box className="p-6 rounded shadow-md bg-white dark:bg-zinc-900 w-full max-w-sm">
         <Text size="4" weight="bold" className="mb-4 block">
           Login Page

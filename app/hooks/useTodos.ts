@@ -9,7 +9,7 @@ import { useSecret } from "@/app/hooks/useSecret";
 export function useTodos() {
   const router = useRouter();
   const [todos, setTodos] = useState<Todo[]>([]);
-  const { secret } = useSecret();
+  const { secret, hasHydrated } = useSecret();
 
   const fetchTodos = async () => {
     try {
@@ -51,6 +51,23 @@ export function useTodos() {
     setTodos(data);
   };
 
+  const updateTodo = async (todo: Todo): Promise<void> => {
+    const res = await fetcher(
+      "/api/updateTodo",
+      {
+        method: "POST",
+        body: JSON.stringify(todo),
+      },
+      secret
+    );
+    if (res.status === 401) {
+      router.replace("/login");
+      return;
+    }
+    const data = await res.json();
+    setTodos(data);
+  };
+
   const deleteTodo = async (id: number) => {
     const res = await fetcher(
       "/api/deleteTodo",
@@ -68,5 +85,12 @@ export function useTodos() {
     setTodos(data);
   };
 
-  return { todos, addTodo, deleteTodo, fetchTodos };
+  return {
+    todos,
+    addTodo,
+    deleteTodo,
+    updateTodo,
+    fetchTodos,
+    isReady: hasHydrated,
+  };
 }

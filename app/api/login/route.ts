@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const uuid = crypto.randomUUID();
+  const uuid = data.secret || crypto.randomUUID();
 
   const { error: updateError } = await supabaseServer
     .from("user")
