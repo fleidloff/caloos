@@ -17,6 +17,7 @@ import {
 } from "@radix-ui/react-icons";
 import { Todo } from "@/app/types/Todo";
 import { useState } from "react";
+import { toDateInputValue } from "../lib/toDateInputValue";
 
 type TodosProps = {
   onDelete: (id: number) => void;
@@ -43,19 +44,23 @@ export default function TodoComponent({
     setIsEditMode(false);
   };
 
+  console.log(draft.due_date);
   if (isEditMode) {
     return (
       <Box width="400px">
         <Card size="2">
           <Flex direction="column" gap="3">
             <TextField.Root
+              size="3"
               value={draft.title ?? ""}
               onChange={(e) => setDraft({ ...draft, title: e.target.value })}
             />
 
             <TextField.Root
-              type="datetime-local"
-              value={draft.due_date ?? ""}
+              type="date"
+              variant="soft"
+              size="3"
+              value={draft.due_date ? toDateInputValue(draft.due_date) : ""}
               onChange={(e) => setDraft({ ...draft, due_date: e.target.value })}
             />
 
@@ -91,7 +96,7 @@ export default function TodoComponent({
               {todo.title}
             </Text>
             <Text as="div" color="gray">
-              {todo.due_date && new Date(todo.due_date).toLocaleString()}
+              {todo.due_date && new Date(todo.due_date).toLocaleDateString()}
             </Text>
           </Box>
 
