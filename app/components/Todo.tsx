@@ -44,7 +44,6 @@ export default function TodoComponent({
     setIsEditMode(false);
   };
 
-  console.log(draft.due_date);
   if (isEditMode) {
     return (
       <Box width="400px">

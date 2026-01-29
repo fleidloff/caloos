@@ -10,8 +10,10 @@ export function useTodos() {
   const router = useRouter();
   const [todos, setTodos] = useState<Todo[]>([]);
   const { secret, hasHydrated } = useSecret();
+  const [isFetching, setIsFetching] = useState(false);
 
   const fetchTodos = async () => {
+    setIsFetching(true);
     try {
       const res = await fetcher(
         "/api/todos",
@@ -29,6 +31,7 @@ export function useTodos() {
     } catch (err) {
       console.error("Failed to fetch todos", err);
     }
+    setIsFetching(false);
   };
 
   const addTodo = async (
@@ -91,6 +94,7 @@ export function useTodos() {
     deleteTodo,
     updateTodo,
     fetchTodos,
+    isFetchingTodos: isFetching,
     isReady: hasHydrated,
   };
 }
