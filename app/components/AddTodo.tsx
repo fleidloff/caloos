@@ -25,8 +25,8 @@ export default function AddTodo({ onAdd }: AddTodoProps) {
   return (
     <form onSubmit={handleSubmit}>
       <Card size="2" className="mb-4">
-        <Flex gap="4" align="center" justify="between">
-          <Box maxWidth="250px">
+        <Flex gap="4" align="center" justify="start">
+          <Box>
             <TextField.Root
               size="3"
               variant="surface"

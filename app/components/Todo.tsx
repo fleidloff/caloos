@@ -46,7 +46,7 @@ export default function TodoComponent({
 
   if (isEditMode) {
     return (
-      <Box width="400px">
+      <Box>
         <Card size="2">
           <Flex direction="column" gap="3">
             <TextField.Root
@@ -87,7 +87,7 @@ export default function TodoComponent({
 
   // ---------------- View mode ----------------
   return (
-    <Box width="400px">
+    <Box>
       <Card size="2">
         <Flex gap="4" align="center" justify="between">
           <Box flexGrow="1">

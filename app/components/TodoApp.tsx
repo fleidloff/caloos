@@ -24,10 +24,10 @@ export default function TodoApp() {
   }, [isReady]);
 
   return (
-    <div className="flex min-h-screen w-full max-w-3xl flex-col items-center py-32 px-16 bg-white dark:bg-black sm:items-start">
+    <Flex direction="column" align="stretch" width="100%">
       <AddTodo onAdd={addTodo} />
       {(!isReady || isFetchingTodos) && (
-        <Box width="400px">
+        <Box>
           <Card size="2">
             <Flex direction="row" gap="3">
               <Text as="div" weight="bold">
@@ -38,6 +38,6 @@ export default function TodoApp() {
         </Box>
       )}
       <Todos data={todos || []} onDelete={deleteTodo} onUpdate={updateTodo} />
-    </div>
+    </Flex>
   );
 }
